@@ -1,58 +1,98 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <div id="content">  
+    <h1>...</h1>  
+      <div>
+        <label>ID</label> : <input type="text" id="txt1" v-model="model.id"  />
+      </div>
+      <div>
+        <label>Name</label> : <input type="text" id="txt2" v-model="model.name" />
+      </div>
+      <div>
+        <label>Monthly Salery Without Tax</label> : <input type="text" id="txt3" v-model="model.monthlySaleryNoTax" />
+      </div>
+      <div>
+        <label>Cost Without Rent</label> : <input type="text" id="txt4" v-model="model.costWithoutRent" />
+      </div>
+      <div>
+        <button type="button" v-on:click="saveClick">Save</button>
+      </div>
+    </div>
+    <hr />
+    <hr />
+    <h1>...</h1>
+    <table border="1" style="margin:auto">
+      <thead>
+        <tr>
+          <th style="width: 100px">ID</th>
+          <th style="width: 100px">Name</th>
+          <th style="width: 100px">Monthly Salery Without Tax</th>       
+          <th style="width: 100px">Cost Without Rent</th>
+          <th style="width: 100px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in model.list" v-bind:key="item.id">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.monthlySaleryNoTax }}</td>      
+          <td>{{ item.costWithoutRent }}</td>      
+          <td><button type="button" v-on:click="deleteClick(item.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+import axios from "axios";
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+export default {
+  name: "HelloWorld",
+  data: function () {
+    return {
+      model: {
+        id: "",
+        name: "",
+        updateDate: null,
+        monthlySaleryNoTax: "",
+        costWithoutRent: "",
+      },
+      list: [],
+    };
+  },
+  methods: {
+    saveClick() {      
+      axios({
+          method: 'post',
+          url: 'https://localhost:7083/api/Cities',
+          headers: {
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept",
+          },
+          data: JSON.stringify(this.model),
+        })
+        .then((resp) => {
+          this.getList();
+          alert("success" + resp.data.id);
+        });
+    },
+    getList() {
+      axios.get("https://localhost:7083/api/Cities").then((resp) => {
+        this.model.list = resp.data;
+      });
+    },
+    deleteClick(id) {
+      axios.delete("https://localhost:7083/api/Cities/" + id).then(() => {
+         this.getList();
+         alert("success");  
+      });
+    }
+  },  
+  mounted: function () {
+    this.getList();
+  },
+};
+</script>
