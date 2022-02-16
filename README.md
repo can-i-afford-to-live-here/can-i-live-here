@@ -23,3 +23,11 @@ Vue JS will be the client side framework used in this project.
 2. ```cd``` to the client directory and run ```npm i``` 
 3. Run ```npm run serve``` to start the app
 
+#### Set up .net core
+
+.net core will be the server side framework used in this project.
+
+1. Install the .net 6 packages with ```wget https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb; sudo dpkg -i packages-microsoft-prod.deb; rm packages-microsoft-prod.deb```
+2. Install the .net sdk and runtime with ```sudo apt-get update; sudo apt-get install -y apt-transport-https && sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0; sudo apt-get install -y apt-transport-https && sudo apt-get update && sudo apt-get install -y aspnetcore-runtime-6.0``` 
+3. ```cd``` to the ```server/src directory``` and run ```dotnet restore``` 
+4. Run ```dotnet run``` to start the app
