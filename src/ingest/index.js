@@ -48,6 +48,12 @@ async function insertLocationWithIndexes(location) {
     await insertLocation(location);
 }
 
+// Delete all values in location and location_indexes
+
+async function deleteAll() {
+    pool.query(`DELETE FROM location`);
+    pool.query(`DELETE from location_indexes`) 
+}
 
 // Use a self-calling function so we can use async / await.
 
@@ -66,5 +72,6 @@ async function insertLocationWithIndexes(location) {
     region: "testRegion",
     location_index_key: 0
   });
+  await deleteAll();
   await pool.end
 })();
