@@ -27,7 +27,6 @@ async function insertLocationIndexes(location) {
     return pool.query(text, values);
 }
 
-
 // Insert location
 
 async function insertLocation(location) {
@@ -72,6 +71,6 @@ async function deleteAll() {
     region: "testRegion",
     location_index_key: 0
   });
-  await deleteAll();
+  //await deleteAll();
   await pool.end
 })();
