@@ -1,0 +1,15 @@
+{
+  "name": "ingest",
+  "version": "1.0.0",
+  "description": "ingest api data into db",
+  "main": "index.js",
+  "dependencies": {
+    "pg": "^8.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
