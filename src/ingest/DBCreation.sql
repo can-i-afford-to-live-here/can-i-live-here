@@ -1,7 +1,6 @@
 drop table if exists location;
 drop table if exists location_indexes;
 
-
 create table location_indexes (
 	location_index_id serial primary key,
 	cost_of_living_index float,
@@ -17,6 +16,8 @@ create table location (
 	country varchar(255),
 	city varchar(255),
 	region varchar(255),
+	latitude float,
+	longitude float,
 	location_index_key serial,
 	constraint location_index_key
 		foreign key(location_index_key)
