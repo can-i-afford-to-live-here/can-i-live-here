@@ -6,7 +6,6 @@
   "dependencies": {
     "pg": "^8.8.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node index.js"
   },
