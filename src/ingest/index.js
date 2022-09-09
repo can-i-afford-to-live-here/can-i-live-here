@@ -31,11 +31,11 @@ async function insertLocationIndexes(location) {
 
 async function insertLocation(location) {
     const text = `
-      INSERT INTO location (country, city, region, location_index_key)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO location (country, city, region, latitude, longitude, location_index_key)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING location_id
     `;
-    const values = [location.country, location.city, location.region, location.location_index_key];
+    const values = [location.country, location.city, location.region, location.latitude, location.longitude, location.location_index_key];
     return pool.query(text, values);
 }
 
@@ -66,9 +66,11 @@ async function deleteAll() {
     local_purchasing_power_index: 1234.123,
     rent_index: 1234.1234,
     restaurant_price_index: 12345.1,
-    country: "testCountry",
-    city: "testCity",
-    region: "testRegion",
+    country: "USA",
+    city: "Denver",
+    region: "Colorado",
+    latitude: 39.7392, 
+    longitude: 104.9903,
     location_index_key: 0
   });
   //await deleteAll();
