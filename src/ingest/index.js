@@ -1,14 +1,6 @@
 
 const { Pool, Client } = require("pg");
-
-const credentials = {
-  user: "gyiqtoylsqblqc",
-  host: "ec2-3-223-213-207.compute-1.amazonaws.com",
-  database: "d7nhp04n5jvm88",
-  password: "5a7e393c053367539aec280fa6c82d50c1d4d2727d6e087fc7e89f19db59cbe1",
-  port: 5432,
-  ssl: true
-};
+const { credentials } = require("../../dbCredentials.js");
 
 // Connect with a connection pool.
 const pool = new Pool(credentials);
