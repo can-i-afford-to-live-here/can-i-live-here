@@ -16,8 +16,12 @@ create table location (
 	country varchar(255),
 	city varchar(255),
 	region varchar(255),
-	latitude float,
-	longitude float,
+	lat float,
+	lng float,
+	north_vp float,
+	south_vp float,
+	east_vp float,
+	west_vp float,
 	location_index_key serial,
 	constraint location_index_key
 		foreign key(location_index_key)
