@@ -139,3 +139,4 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 dbCredentials.js
+apiKeys.js
