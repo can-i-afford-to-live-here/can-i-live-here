@@ -9,7 +9,8 @@ const sequelize = new Sequelize(credentials.database, credentials.user, credenti
       },
     dialectOptions: {
         ssl: {
-            require: true
+            require: true,
+            rejectUnauthorized: false 
         }
     }
   });
@@ -35,11 +36,27 @@ const sequelize = new Sequelize(credentials.database, credentials.user, credenti
             type: DataTypes.STRING,
             allowNull:true
         },
-        latitude: {
+        lat: {
             type: DataTypes.FLOAT,
             allowNull:true
         },
-        longitude: {
+        lng: {
+            type: DataTypes.FLOAT,
+            allowNull:true
+        },
+        north_vp: {
+            type: DataTypes.FLOAT,
+            allowNull:true
+        },
+        south_vp: {
+            type: DataTypes.FLOAT,
+            allowNull:true
+        },
+        east_vp: {
+            type: DataTypes.FLOAT,
+            allowNull:true
+        },
+        west_vp: {
             type: DataTypes.FLOAT,
             allowNull:true
         },
@@ -62,28 +79,22 @@ function connectToDB() {
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
-
-   
 }
 
 // Keep around for a bit - we might need it
-// (async () => {
-//     await sequelize.sync({ force: true });
-//     // Code here
-//   })();
+(async () => {
+    await sequelize.sync({ force: false });
+    // Code here
+  })();
 
 connectToDB()
 
 
 async function getLocations() {
-    console.log("Entered in here")
-    const locations = await location.findAll({
-        attributes: ['country']
-    });
+    console.log("Getting locations")
+    const locations = await location.findAll();
     console.log("locations" + JSON.stringify(locations) )
 }
 
 getLocations()
-console.log(location)
-console.log(sequelize.models.location)
 console.log(location === sequelize.models.location); 

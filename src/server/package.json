@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "connect": "nodemon src/db/models/Location.ts",
+    "connect": "nodemon src/db/models/locationIndex.ts",
     "dev": "nodemon src/server.ts",
     "build": "rm -rf build/ && prettier --write src/ && tsc"
   },
