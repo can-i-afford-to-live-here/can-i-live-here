@@ -1,10 +1,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { credentials } from '../../../../../dbCredentials.js';
 
-console.log(credentials.database);
-console.log(credentials.user);
-console.log(credentials.password);
-
 const sequelize = new Sequelize(credentials.database, credentials.user, credentials.password, {
     host: credentials.host,
     dialect: 'postgres',
