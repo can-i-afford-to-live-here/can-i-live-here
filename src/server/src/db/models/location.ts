@@ -1,21 +1,7 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
-import { credentials } from '../../../../../dbCredentials.js';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../connect';
 
-const sequelize = new Sequelize(credentials.database, credentials.user, credentials.password, {
-    host: credentials.host,
-    dialect: 'postgres',
-    define: {
-        freezeTableName: true
-      },
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false 
-        }
-    }
-  });
-
-    class location extends Model {}
+    export class location extends Model {}
 
     location.init({
         location_id: {
@@ -71,30 +57,3 @@ const sequelize = new Sequelize(credentials.database, credentials.user, credenti
         modelName: 'location', // We need to choose the model name
         timestamps: false
       });
-
-function connectToDB() {
-    try {
-        sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-
-// Keep around for a bit - we might need it
-(async () => {
-    await sequelize.sync({ force: false });
-    // Code here
-  })();
-
-connectToDB()
-
-
-async function getLocations() {
-    console.log("Getting locations")
-    const locations = await location.findAll();
-    console.log("locations" + JSON.stringify(locations) )
-}
-
-getLocations()
-console.log(location === sequelize.models.location); 

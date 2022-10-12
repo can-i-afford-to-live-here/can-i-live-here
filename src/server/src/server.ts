@@ -2,7 +2,8 @@
 import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
-import routes from './routes/posts';
+import routes from './routes/location';
+import { connectToDB, sequelize } from './db/connect'
 
 const router: Express = express();
 
@@ -37,6 +38,8 @@ router.use((req, res, next) => {
         message: error.message
     });
 });
+
+connectToDB(sequelize);
 
 /** Server */
 const httpServer = http.createServer(router);
