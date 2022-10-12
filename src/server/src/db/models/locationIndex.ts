@@ -1,19 +1,5 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
-import { credentials } from '../../../../../dbCredentials.js';
-
-const sequelize = new Sequelize(credentials.database, credentials.user, credentials.password, {
-    host: credentials.host,
-    dialect: 'postgres',
-    define: {
-        freezeTableName: true
-      },
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false 
-        }
-    }
-  });
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../connect';
 
   class location_indexes extends Model {}
 
@@ -59,28 +45,3 @@ const sequelize = new Sequelize(credentials.database, credentials.user, credenti
     modelName: 'location_indexes', // We need to choose the model name
     timestamps: false
   });
-
-  function connectToDB() {
-    try {
-        sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-
-connectToDB()
-
-async function getLocations() {
-    console.log("Entered in here")
-    const locations = await location_indexes.findAll({
-        attributes: ['cost_of_living_index']
-    });
-    console.log("locations" + JSON.stringify(locations) )
-}
-
-getLocations()
-console.log(location_indexes)
-console.log(sequelize.models.location_indexes)
-console.log(location_indexes === sequelize.models.location); 
-
